@@ -47,7 +47,9 @@ public abstract class FnSetup<T extends Context> {
      * @param context the context to be used
      * @return the Application created
      */
-    protected abstract Application createApplication(Console console, T context);
+    protected Application createApplication(Console console, T context) {
+    	return new FnApplication<T>(console, context);
+    }
     
     /**
      * Should read from file or return defaultParser()
