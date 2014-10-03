@@ -1,0 +1,3 @@
+[submodule "console-parser"]
+	path = console-parser
+	url = git@github.com:luanpotter/console-parser.git
