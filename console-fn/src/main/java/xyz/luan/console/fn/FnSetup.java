@@ -14,7 +14,6 @@ import xyz.luan.console.parser.Application;
 import xyz.luan.console.parser.Console;
 import xyz.luan.console.parser.Context;
 import xyz.luan.console.parser.Controller;
-import xyz.luan.console.parser.DefaultConsole;
 import xyz.luan.console.parser.Parser;
 import xyz.luan.console.parser.actions.InvalidAction;
 import xyz.luan.console.parser.actions.InvalidHandler;
@@ -40,7 +39,7 @@ public class FnSetup<T extends Context> {
 	}
 	
     public Application setupApplication(final T context) {
-        final Console console = new DefaultConsole();
+        final Console console = new FnConsole();
 
         Caller caller = defaultCaller(context, console);
         Parser parser = getParser();
