@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
 
 import xyz.luan.console.parser.Aliases;
 import xyz.luan.console.parser.Application;
@@ -53,10 +54,8 @@ public class FnSetup<T extends Context> {
     /**
      * Creates the custom application using the pre-built console and text
      * 
-     * @param console
-     *            the console to be used
-     * @param context
-     *            the context to be used
+     * @param console the console to be used
+     * @param context the context to be used
      * @return the Application created
      */
     protected Application createApplication(Console console, T context) {
@@ -107,11 +106,11 @@ public class FnSetup<T extends Context> {
         return caller;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked" })
     protected void forEachController(Consumer<Class<? extends Controller<T>>> consumer) {
         final Reflections reflections = new Reflections(controllersPackage);
-        Set<Class<? extends Controller>> classes = reflections.getSubTypesOf(Controller.class);
-        for (Class<? extends Controller> controller : classes) {
+        Set<Class<?>> classes = reflections.getTypesAnnotatedWith(FnController.class);
+        for (Class<?> controller : classes) {
             consumer.accept((Class<? extends Controller<T>>) controller);
         }
     }
