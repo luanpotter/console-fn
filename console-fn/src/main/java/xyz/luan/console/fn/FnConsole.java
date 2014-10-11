@@ -67,7 +67,7 @@ public class FnConsole implements Console {
 	public char[] readPassword() {
         try {
         	final String readPassMessage = ansi().fg(Color.YELLOW).a("> ").reset().toString();
-        	return console.readLine(readPassMessage).toCharArray(); //TODO password
+        	return console.readLine(readPassMessage, '*').toCharArray(); //TODO creating string with pass...
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

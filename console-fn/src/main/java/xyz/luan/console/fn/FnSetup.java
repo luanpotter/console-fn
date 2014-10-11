@@ -4,12 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
 import org.reflections.Reflections;
 
+import xyz.luan.console.parser.Aliases;
 import xyz.luan.console.parser.Application;
 import xyz.luan.console.parser.Console;
 import xyz.luan.console.parser.Context;
@@ -23,9 +23,17 @@ import xyz.luan.console.parser.callable.Callable;
 import xyz.luan.console.parser.config.ConfigController;
 import xyz.luan.console.parser.config.HelpController;
 
-public abstract class FnSetup<T extends Context> {
+/**
+ * The way presented, this class can easily help you build your application.
+ * It can be overwritten as pleased to insert custom behavior.
+ * The most common methods to be overwritten have Javadocs explaining their functionality.
+ * @author Luan Nico
+ *
+ * @param <T> your context
+ */
+public class FnSetup<T extends Context> {
 
-	private String controllersPackage;
+	protected String controllersPackage;
 	
 	public FnSetup(String controllersPackage) {
 		this.controllersPackage = controllersPackage;
@@ -63,13 +71,15 @@ public abstract class FnSetup<T extends Context> {
 	 * Should return a list of aliases
 	 * @return the list of aliases
 	 */
-	protected abstract Map<String, String> defaultAliases();
+	protected Aliases defaultAliases() {
+	    return Aliases.createAliasesWithDefaults();
+	}
 
-    protected final Parser defaultParser() {
+    protected Parser defaultParser() {
         return new Parser(defaultAliases(), defaultCallables());
     }
 
-    private Caller defaultCaller(T context, Console console) {
+    protected Caller defaultCaller(T context, Console console) {
     	Caller caller = new Caller();
     	forEachController(c -> {
 			try {
@@ -84,7 +94,7 @@ public abstract class FnSetup<T extends Context> {
     }
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void forEachController(Consumer<Class<? extends Controller<T>>> consumer) {
+	protected void forEachController(Consumer<Class<? extends Controller<T>>> consumer) {
 		final Reflections reflections = new Reflections(controllersPackage);
     	Set<Class<? extends Controller>> classes = reflections.getSubTypesOf(Controller.class);
     	for (Class<? extends Controller> controller : classes) {
@@ -92,7 +102,7 @@ public abstract class FnSetup<T extends Context> {
     	}
 	}
 
-    private ArrayList<Callable> defaultCallables() {
+	protected ArrayList<Callable> defaultCallables() {
         ArrayList<Callable> callables = new ArrayList<>();
 
         forEachController(c -> {
