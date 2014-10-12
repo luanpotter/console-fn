@@ -27,6 +27,7 @@ public class FnConsole extends TabbedConsole {
         try {
             console.print(start(Color.GREEN, " "));
             console.println(ansi().fg(Color.GREEN).a(m.toString()).reset().toString());
+            console.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -41,6 +42,7 @@ public class FnConsole extends TabbedConsole {
         try {
             console.print(start(Color.GREEN, "<"));
             console.println(r.toString());
+            console.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,6 +54,7 @@ public class FnConsole extends TabbedConsole {
         try {
             console.print(start(Color.RED, "<"));
             console.println(e.toString());
+            console.flush();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
