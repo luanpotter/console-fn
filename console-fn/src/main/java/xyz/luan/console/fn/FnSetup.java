@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
 
 import xyz.luan.console.parser.Aliases;
 import xyz.luan.console.parser.Application;
@@ -20,7 +19,8 @@ import xyz.luan.console.parser.actions.InvalidAction;
 import xyz.luan.console.parser.actions.InvalidHandler;
 import xyz.luan.console.parser.call.Caller;
 import xyz.luan.console.parser.callable.Callable;
-import xyz.luan.console.parser.config.ConfigController;
+import xyz.luan.console.parser.config.ConfigAliasesController;
+import xyz.luan.console.parser.config.ConfigCallablesController;
 import xyz.luan.console.parser.config.HelpController;
 
 /**
@@ -97,8 +97,9 @@ public class FnSetup<T extends Context> {
         });
 
         try {
-            caller.registerClass("config", new ConfigController().setup(context, console));
             caller.registerClass("help", new HelpController().setup(context, console));
+            caller.registerClass("configAliases", new ConfigAliasesController().setup(context, console));
+            caller.registerClass("configCallables", new ConfigCallablesController().setup(context, console));
         } catch (InvalidAction | InvalidHandler e) {
             throw new RuntimeException(e);
         }
@@ -127,8 +128,9 @@ public class FnSetup<T extends Context> {
             }
         });
 
-        ConfigController.defaultActions("config", callables);
         HelpController.defaultActions("help", callables);
+        ConfigAliasesController.defaultActions("configAliases", callables);
+        ConfigCallablesController.defaultActions("configCallables", callables);
 
         return callables;
     }
