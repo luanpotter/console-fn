@@ -1,5 +1,6 @@
 **/*.dat
 target/
+bin/
 build/
 dist/
 .project
