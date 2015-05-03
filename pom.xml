@@ -10,7 +10,7 @@
 
 	<groupId>xyz.luan.console</groupId>
 	<artifactId>console-fn</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>Console Functions</name>
@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>xyz.luan.console</groupId>
 			<artifactId>console-parser</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fusesource.jansi</groupId>
